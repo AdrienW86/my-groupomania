@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Message.belongsTo(models.User,{
+      models.Message.belongsTo(models.User, {
         foreignKey: {
           allowNull: false
         }
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Message.init({
-    
+    idUSERS: DataTypes.INTEGER,
     title: DataTypes.STRING,
     content: DataTypes.STRING,
     attachment: DataTypes.STRING,
