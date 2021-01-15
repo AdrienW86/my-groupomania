@@ -37,7 +37,7 @@ exports.signup = (req, res, next) => {
     })
     .then(userFound => {
         if (!userFound) {
-            bcrypt.hash((password, email), 10, function(err, bcryptedPassword, bcryptedEmail)
+            bcrypt.hash((password, email), 10, function(err, bcryptedPassword, bcryptedEmail) 
              {
                 const newUser = models.User.create({
                     email: email,

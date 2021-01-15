@@ -1,28 +1,41 @@
 <template>
-  <div class="about">
-    <h1> Créer un compte </h1>
+  <div class="hello">
 
-      <form id="login">
+    <h1> Bienvenue My Groupomania </h1>
+
+      <div class="mur_messages">
+
+      <form id="signup">
         <label for="email"> Entrer votre adresse mail </label>
           <input type="email" name="email"  class="email" required>
 
         <label for="password"> Entrer votre mot de passe </label>
            <input type="password" name="password"  class="password" required>
 
-            <button id='login_btn' type="submit" @click="login()"> Valider </button>
+            <button id='sign_btn' type="submit" @click="sign()"> Valider </button>
       </form>
 
+    </div> 
+    
   </div>
+    
 </template>
 
+<script>
+export default {
+  name: 'Sign',
+ 
+}
+</script>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 
 h1 {
   color:#30289e;
 }
 
-#login {
+#signup {
   display: flex;
   flex-direction: column;
   margin: auto;
