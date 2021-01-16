@@ -36,9 +36,8 @@ h1 {
 
   button {
     margin-top: 20px;
-    margin-left: 30%;
-    margin-right: 30%;
-    width: 40%;
+    
+    width: 50px;
     height: 30px;
     border-radius: 10px;
     color:#30289e;

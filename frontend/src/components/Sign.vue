@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
 
-    <h1> Bienvenue My Groupomania </h1>
+   
 
       <div class="mur_messages">
 
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'Sign',
  
@@ -39,23 +40,28 @@ h1 {
   display: flex;
   flex-direction: column;
   margin: auto;
-  width: 70%;
+  width: 200px;
   
   input {
     margin-top: 10px;
     margin-bottom: 10px;
     height: 20px;
+    width: 200px;
   }
 
   button {
     margin-top: 20px;
-    margin-left: 30%;
-    margin-right: 30%;
-    width: 40%;
+    margin-right: 50px;
+    margin-left:50px;
+    width: 100px;
     height: 30px;
     border-radius: 10px;
     color:#30289e;
     font-weight: bold;
+
+      &:hover {
+        color: red;
+      }
   }
 }
 

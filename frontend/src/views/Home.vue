@@ -1,8 +1,11 @@
 <template>
+
+
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
+    
     <Sign /> 
     <Users />
+    <CreatePost/>
 
    
   </div> 
@@ -10,14 +13,16 @@
 
 <script>
 // @ is an alias to /src
-import Sign from '@/components/Sign.vue'
-import Users from '@/components/Users.vue'
+import Sign from '@/components/Sign.vue';
+import Users from '@/components/Users.vue';
+import CreatePost from '@/components/CreatePost.vue';
 
 export default {
   name: 'Home',
   components: {
     Sign,
-    Users
+    Users,
+    CreatePost
   }
 }
 </script>

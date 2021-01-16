@@ -1,12 +1,26 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Connexion</router-link> |
-      <router-link to="/about">Inscription</router-link>
+    <Header/>
     </div>
     <router-view/>
+    
   </div>
 </template>
+
+<script>
+import Header from "./components/Header";
+
+
+export default {
+  components: {
+    Header,
+    
+    
+  }
+  
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -19,12 +33,18 @@
 
 #nav {
   padding: 30px;
+  display: flex;
+  
 
-  a {
+  img {
+    width: 200px;
+  }
+
+    a {
     font-weight: bold;
     color: #2c3e50;
 
-    &.router-link-exact-active {
+      &.router-link-exact-active {
       color: #30289e;
     }
   }

@@ -37,11 +37,11 @@ exports.signup = (req, res, next) => {
     })
     .then(userFound => {
         if (!userFound) {
-            bcrypt.hash((password, email), 10, function(err, bcryptedPassword, bcryptedEmail) 
-             {
+            bcrypt.hash(password, 10, function(err, bcryptedPassword) { 
+             
                 const newUser = models.User.create({
                     email: email,
-                    username: bcryptedEmail,
+                    username: username,
                     password: bcryptedPassword,
                     bio: bio,
                     isAdmin: 0
@@ -110,7 +110,7 @@ exports.getUserProfil = (req, res, next) => {
     return res.status(400).json({ 'erreur': "token erroné" });
 
     models.User.findOne({
-        attributes: ['id', 'email'],
+        attributes: ['id', 'email','username','bio'],
         where: { id: userId }
     }).then(user => {
         if (user) {
@@ -141,6 +141,8 @@ exports.updateUserProfil = (req, res, next) => {
 
     // Params 
     let password = req.body.password;
+    let bio = req.body.bio;
+    let username = req.body.username;
 
     models.User.findOne({
         attributes: ['id', 'password'],
@@ -148,7 +150,9 @@ exports.updateUserProfil = (req, res, next) => {
     }).then(userFound => {
         if(userFound) {
             userFound.update({
-                password: (password ? password : userFound.password)
+                password: (password ? password : userFound.password),
+                username: (username ? username : userFound.username),
+                bio: (bio ? bio : userFound.bio),
             }).then(userFound => {
                 if (userFound) {
                     return res.status(201).json(userFound);
