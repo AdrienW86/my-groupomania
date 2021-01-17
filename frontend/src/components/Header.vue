@@ -4,7 +4,7 @@
             <nav class="navbar">
                 
                     <div class="connexion"> <router-link to="/">Connexion</router-link> </div>
-                    <div class="inscription"> <router-link to="/about">Inscription</router-link> </div>
+                    <div class="inscription"> <router-link to="/sign">Inscription</router-link> </div>
             </nav>      
     </header>
 </template>

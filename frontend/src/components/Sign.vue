@@ -10,13 +10,17 @@
           <input v-model="userInfos.username" name="username"  class="username" required>
 
         <label for="email"> Entrer votre adresse mail </label>
-          <input v-model="userInfos.email" name="email"  class="email" required>
+          <input v-model="userInfos.email" name="email"  class="email" required> <p> {{userInfos.email}}</p>
 
         <label for="password"> Entrer votre mot de passe </label>
            <input v-model="userInfos.password" name="password"  class="password" required>
 
             <button id='sign_btn' type="submit" @click="sign()"> Valider </button>
       </form>
+
+        <div>
+          <p> {{  }}</p>
+        </div>
 
     </div> 
     
@@ -42,14 +46,13 @@ export default {
 
   methods: {
 
-    sign() {
+    sign: async function () {
       const userData = {
         email : this.userInfos.email,
         username: this.userInfos.username,
         password : this.userInfos.password,
-        
-
       };
+
     if( userData.email == null || userData.username == null || userData.password == null) {
         alert('Saisies invalides')
     
@@ -58,13 +61,42 @@ export default {
         .post("http://localhost:8080/api/auth/signup", userData)
         .then((response) => {
           if(response) {
-            this.storeInfo(response.data.token, response.data.userId);
+            this.saveSession(response.data.token, response.data.userId);
+            this.email = response.data.id.email
+            console.log(response.data.userId)
+            if (document.getElementById("div")) {
+              document.getElementById("div").style.visibility ="visible";
+              
+            }
             
+          }else{
+            alert("données invalides")
           }
         }).catch((err) => console.log(err));
 
       } 
-    }
+    },
+    /*saveSession(token, userId) {
+      let sessionUserData = {};
+      axios
+        .get("http://localhost:8080/api/auth/me" + userId, {
+          headers: {
+            Authorization: "Bearer" + token,
+          },
+        }).then((response) => {
+          sessionUserData = response.data;
+          if(this.staySigned) {
+            localStorage.setItem("rester connecté", this.staySigned);
+          }
+          storage.setStorage("token", token);
+          storage.setStorage("isAdmin", sessionUserData.isAdmin);
+        }).catch((err) => {
+          console.log(err)
+        })
+
+        
+    }*/
+
   }
 }
 </script>

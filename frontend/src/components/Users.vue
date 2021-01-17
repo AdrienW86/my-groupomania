@@ -1,54 +1,51 @@
 <template>
+  <div id="table_user">
+    <h2>Liste des utilisateurs</h2>
+
+    <button @click="getAllUsers()">Voir les utilisateurs</button>
+
     
-    <div id="table_user"> 
-
-        <h2> Liste des utilisateurs </h2>
-
-            <button @click="getAllUsers()"> Voir les utilisateurs </button>
-
-    <div class="liste_users">
-        <UserDetails/>
-         </div>
-        
-    </div>
+    <UserDetails />
+  </div>
 </template>
 
 <script>
-const axios = require('axios');
+const axios = require("axios");
 
-import UserDetails from './UserDetails';
+import UserDetails from "./UserDetails";
 export default {
-    name: "Users",
+  name: "Users",
 
-    components: {
-        UserDetails
-    },
+  components: {
+    UserDetails,
+  },
 
-data() {
+  async data() {
     return {
-        user: [],
-        userContent: [],
-        comments: "",
-        posts: ""
+      userProfil: {
+        username: "",
+        bio: "",
+      },
     };
-},   
-methods: {
+  },
+  methods: {
     getAllUsers() {
-        const options = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + sessionStorage.getItem("key")
-            }
-        };
-axios
-    .get("http://localhost:8080/api/auth/all", options)
-    .then(response => {
-        this.userList = response.data;
-        console.log(response.data)
-    })
-    .catch(err => console.log(err));
-},
+      const options = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("key"),
+        },
+      };
 
-}
-}
+      axios
+        .get("http://localhost:8080/api/auth/all", options)
+        .then((response) => {
+          this.username = response.data.username;
+          this.bio = response.data.bio;
+          console.log(response.data);
+        })
+        .catch((err) => console.log(err));
+    },
+  },
+};
 </script>
