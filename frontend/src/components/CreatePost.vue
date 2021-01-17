@@ -4,7 +4,7 @@
       <h3>Créer un post</h3>
       <form enctype="multipart/form-data" action="/create" method="post">
         <div class="input-group mb-3">
-          <label for="input_text">Racontez nous une incroyable histoire:</label>
+          <label for="input_text">Votre nouveau message:</label>
           <br />
           <input v-model="contentPost.content" class="input-text" id="input_text" type="text" />
         </div>
@@ -22,7 +22,7 @@
               aria-describedby="inputFileAddon"
               @change="onFileChange"
             />
-            <label class="custom-file-label" for="inputFile">Choose file</label>
+            <label class="custom-file-label" for="inputFile">Choisissez un fichier</label>
           </div>
         </div>
         <input type="submit" class="btn btn-primary" @click.prevent="createPost" value="Submit" />
@@ -53,18 +53,18 @@ export default {
   methods: {
     createPost() {
       console.log(this.contentPost);
-      const fd = new FormData();
-      fd.append("inputFile", this.contentPost.postImage);
-      fd.append("content", this.contentPost.content);
-      console.log("test récup", fd.get("inputFile"));
-      console.log("test récup", fd.get("content"));
-      if (fd.get("inputFile") == "null" && fd.get("content") == "null") {
+      const newPost = new FormData();
+      newPost.append("inputFile", this.contentPost.postImage);
+      newPost.append("content", this.contentPost.content);
+      console.log("test récup", newPost.get("inputFile"));
+      console.log("test récup", newPost.get("content"));
+      if (newPost.get("inputFile") == "null" && newPost.get("content") == "null") {
         let msgReturn = document.getElementById('msgReturnAPI')
         msgReturn.classList.add('text-danger')
         this.msgError = "Rien à publier";
       } else {
         axios
-          .post("http://localhost:3000/api/post/create", fd, {
+          .post("http://localhost:8080/api/auth/messages/new", newPost, {
             headers: {
               Authorization: "Bearer " + window.localStorage.getItem("token")
             }

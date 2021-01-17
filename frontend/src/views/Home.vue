@@ -3,9 +3,10 @@
 
   <div class="home">
     
-    <Sign /> 
+    <Login/>
     <Users />
     <CreatePost/>
+    <Test/>
 
    
   </div> 
@@ -13,15 +14,17 @@
 
 <script>
 // @ is an alias to /src
-import Sign from '@/components/Sign.vue';
+import Login from '@/components/Login.vue';
 import Users from '@/components/Users.vue';
+import Test from "@/components/test.vue";
 import CreatePost from '@/components/CreatePost.vue';
 
 export default {
   name: 'Home',
   components: {
-    Sign,
+    Login,
     Users,
+    Test,
     CreatePost
   }
 }

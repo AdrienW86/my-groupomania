@@ -1,21 +1,17 @@
 <template>
-  <div class="about">
-    <h1> Créer un compte </h1>
-
-      <form id="login">
-        <label for="email"> Entrer votre adresse mail </label>
-          <input type="email" name="email"  class="email" required>
-
-        <label for="password"> Entrer votre mot de passe </label>
-           <input type="password" name="password"  class="password" required>
-
-            <button id='login_btn' type="submit" @click="login()"> Valider </button>
-      </form>
-
-  </div>
+ <Sign/>
 </template>
 
-
+<script>
+import Sign from '@/components/Sign.vue';
+export default {
+  name: 'Sign',
+  components: {
+    Sign,
+  }
+  
+}
+</script>
 <style scoped lang="scss">
 
 h1 {

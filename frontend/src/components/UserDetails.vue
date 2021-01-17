@@ -12,8 +12,8 @@
   </tr>
   <tr>
     
-    <td> {{}}</td>
-    <td> {{}}</td>
+    <td> {{username}}</td>
+    <td> {{email}}</td>
     <td></td>
     <td></td>
   </tr>

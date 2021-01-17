@@ -1,31 +1,71 @@
 <template>
-  <div class="hello">
+  <div class="sign">
 
-   
-
-      <div class="mur_messages">
+    
+    <h1> Créer un compte </h1>
 
       <form id="signup">
+
+        <label for="username"> Entrer votre pseudo </label>
+          <input v-model="userInfos.username" name="username"  class="username" required>
+
         <label for="email"> Entrer votre adresse mail </label>
-          <input type="email" name="email"  class="email" required>
+          <input v-model="userInfos.email" name="email"  class="email" required>
 
         <label for="password"> Entrer votre mot de passe </label>
-           <input type="password" name="password"  class="password" required>
+           <input v-model="userInfos.password" name="password"  class="password" required>
 
             <button id='sign_btn' type="submit" @click="sign()"> Valider </button>
       </form>
 
     </div> 
     
-  </div>
+  
     
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
   name: 'Sign',
- 
+
+  data() {
+    return {
+        userInfos : {
+        email: "",
+        username: "",
+        password: "",
+      }
+    }
+  },
+
+  methods: {
+
+    sign() {
+      const userData = {
+        email : this.userInfos.email,
+        username: this.userInfos.username,
+        password : this.userInfos.password,
+        
+
+      };
+    if( userData.email == null || userData.username == null || userData.password == null) {
+        alert('Saisies invalides')
+    
+    }else{
+      axios
+        .post("http://localhost:8080/api/auth/signup", userData)
+        .then((response) => {
+          if(response) {
+            this.storeInfo(response.data.token, response.data.userId);
+            
+          }
+        }).catch((err) => console.log(err));
+
+      } 
+    }
+  }
 }
 </script>
 

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-
+const axios = require('axios');
 
 import UserDetails from './UserDetails';
 export default {
@@ -22,9 +22,33 @@ export default {
 
     components: {
         UserDetails
-    }
-    
+    },
 
+data() {
+    return {
+        user: [],
+        userContent: [],
+        comments: "",
+        posts: ""
+    };
+},   
+methods: {
+    getAllUsers() {
+        const options = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + sessionStorage.getItem("key")
+            }
+        };
+axios
+    .get("http://localhost:8080/api/auth/all", options)
+    .then(response => {
+        this.userList = response.data;
+        console.log(response.data)
+    })
+    .catch(err => console.log(err));
+},
 
+}
 }
 </script>
