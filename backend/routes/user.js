@@ -10,7 +10,7 @@ const userCtrl = require('../controllers/usersCtrl');
 
 
 // Users routes
-
+router.post('/admin/', userCtrl.admin);
 router.post('/signup/', userCtrl.signup);
 router.post('/login/',userCtrl.login);
 router.get('/all/', userCtrl.getAllUsers)
@@ -27,7 +27,7 @@ router.put('messages/:id/', messageCtrl.modifyMessage);     // à finaliser
 
 // Likes
 
-//router.post('/messages/:messageId/vote/like',likesCtrl.likePost);       // a terminer
+//router.post('/messages/:messageId/vote/like',likesCtrl.likePost);       // à voir avec le client
 //router.post('/messages/:messageId/vote/dislike',likesCtrl.dislikePost);
 
    

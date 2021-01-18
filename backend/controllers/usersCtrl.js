@@ -64,6 +64,60 @@ exports.signup = (req, res, next) => {
     });
 }
  
+//
+
+exports.admin = (req, res, next) => {
+
+    // Params
+
+    let email = req.body.email;
+    let password = req.body.password;
+    let username = req.body.username;
+    let bio = req.body.bio;
+
+    if (email !== 'adrien_weiss@outlook.fr' || username !== 'Adrien' || password !== 'alibabas') {
+        return res.status(400).json({ 'erreur': "paramètres manquants "});
+    }
+
+    
+
+    models.User.findOne({
+        attributes: ['email'],
+        where: { email: email }
+    })
+    .then(userFound => {
+        if (!userFound) {
+            bcrypt.hash(password, 10, function(err, bcryptedPassword) { 
+             
+                const newUser = models.User.create({
+                    email: email,
+                    username: username,
+                    password: bcryptedPassword,
+                    bio: bio,
+                    isAdmin: +1
+                })
+                .then(newUser => {
+                    return res.status(201).json({
+                        'userId': newUser.id
+                    })
+                })
+                .catch(err => {
+                    return res.status(500).json({ 'erreur': " impossible d'ajouter l'utilisateur " });
+                });
+            });
+        }else{
+            return res.status(409).json({ 'erreur': "l'utilisateur existe déjà "});
+        }
+    })
+    .catch(function(err) {
+        return res.status(500).json({ 'erreur': "impossible de vérifier l'utilisateur "});
+    });
+}
+
+
+
+//
+
 exports.login = (req, res, next) => { 
 
     // Params
