@@ -1,7 +1,7 @@
 <template>
     <footer> 
         <section class="logo"> 
-            <a href="#">Groupomania </a> 
+            <img alt="Vue logo" src="../assets/Groupomania_logo_red.png">
         </section>
         <section class="infos">
             <h4> Nos partenaires: </h4>
@@ -36,9 +36,9 @@ export default {
 footer {
     display: flex;
     height: 160px;
-    background-color: #30289e;
-    color: white;
-    font-size: 0.5em;
+    background-color: #ffffff;
+    color: rgb(248, 12, 12);
+    font-size: 0.7em;
     width: 100%;
     margin: auto;
 
@@ -54,7 +54,10 @@ footer {
 
     h4 {   
         text-align:center;
-        color: white;
+        color: rgb(17, 27, 163);
+        font-weight: bold;
+        font-size: 1.2em;
+        padding-left: 30px;
     }
 
       li {  
@@ -63,7 +66,7 @@ footer {
 
     a {
         text-decoration: none;
-        color: white
+        color: rgb(243, 11, 11)
     }
 }
 

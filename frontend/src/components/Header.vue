@@ -1,6 +1,6 @@
 <template>
     <header>
-         <img alt="Vue logo" src="../assets/Groupomania_logo.png">
+         <img alt="Vue logo" src="../assets/Groupomania_logo_white.png">
             <nav class="navbar">
                 
                     <div class="connexion"> <router-link to="/">Connexion</router-link> </div>

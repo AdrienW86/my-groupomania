@@ -1,31 +1,31 @@
 <template>
   <div>
     <div class="block-post">
-      <h3>Créer un post</h3>
+      <h1>Créer un post</h1>
       <form enctype="multipart/form-data" action="/create" method="post">
         <div class="input-group mb-3">
-          <label for="input_text">Votre nouveau message:</label>
+          <label class="new_post" for="input_text">Votre nouveau message:</label>
           <br />
           <input v-model="contentPost.content" class="input-text" id="input_text" type="text" />
         </div>
 
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="inputFileAddon">Upload</span>
+            
           </div>
           <div class="custom-file">
             <input
               name="inputFile"
               type="file"
-              class="custom-file-input"
+              class="btn"
               id="inputFile"
               aria-describedby="inputFileAddon"
               @change="onFileChange"
             />
-            <label class="custom-file-label" for="inputFile">Choisissez un fichier</label>
+            <button class="btn" for="inputFile">Choisissez un fichier</button>
           </div>
         </div>
-        <input type="submit" class="btn btn-primary" @click.prevent="createPost" value="Submit" />
+        <button type="submit" class="btn" @click.prevent="createPost" >Envoyer </button>
         <span id='msgReturnAPI' class="mx-3 text-danger" v-if="user.token==null">Veuillez vous connecter</span>
         <span id='msgReturnAPI' class="mx-3" v-else>{{msgError}}</span>
       </form>
@@ -88,7 +88,24 @@ export default {
 </script>
 
 <style>
+
+h1{
+  color: rgb(5, 5, 116)
+}
+label.new_post{
+  color: white;
+
+}
 .input-text {
-  width: 100%;
+  width: 80%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+input {
+  
+  color: rgb(252, 247, 247);
+}
+.btn {
+  background: green
 }
 </style>

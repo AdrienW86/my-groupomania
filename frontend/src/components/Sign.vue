@@ -1,7 +1,7 @@
 <template>
+
   <div class="sign">
 
-    
     <h1> Créer un compte </h1>
 
       <form id="signup">
@@ -18,14 +18,8 @@
             <button id='sign_btn' type="submit" @click="sign()"> Valider </button>
       </form>
 
-        <div>
-          <p> {{  }}</p>
-        </div>
-
     </div> 
-    
-  
-    
+       
 </template>
 
 <script>
@@ -46,11 +40,11 @@ export default {
 
   methods: {
 
-    sign: async function () {
+    sign: function () {
       const userData = {
-        email : this.userInfos.email,
-        username: this.userInfos.username,
-        password : this.userInfos.password,
+      email : this.userInfos.email,
+      username: this.userInfos.username,
+      password : this.userInfos.password,
       };
 
     if( userData.email == null || userData.username == null || userData.password == null) {

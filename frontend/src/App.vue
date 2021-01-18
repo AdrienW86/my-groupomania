@@ -10,45 +10,41 @@
 
 <script>
 import Header from "./components/Header";
-
 import Footer from "./components/Footer";
 
 
 export default {
   components: {
     Header,
-    Footer,
-    
-    
+    Footer,   
   }
   
 }
 </script>
 
 <style lang="scss">
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background: linear-gradient(#0d1997,#ff0707, );
 }
-
 #nav {
   padding: 30px;
   display: flex;
   
-
   img {
     width: 200px;
   }
-
     a {
     font-weight: bold;
-    color: #2c3e50;
+    color: #e2e8ee;
 
       &.router-link-exact-active {
-      color: #30289e;
+      color: #fa0c0c;
     }
   }
 }

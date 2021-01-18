@@ -1,51 +1,120 @@
 <template>
-  <div id="table_user">
-    <h2>Liste des utilisateurs</h2>
+  
+  
 
-    <button @click="getAllUsers()">Voir les utilisateurs</button>
+    <div id="table_user">
+
+     <h1> Nos membres </h1>
+
+     <h4> Rechercher un utilisateur </h4>  <input> 
+
+      <div class="user-infos" >
+    
+      <li v-for="user in users" :key="user.id">
+
+        <div class="pseudo">
+         <span> {{user.username}} </span>
+        </div> 
+
+        <div class="bio">
+         <span> {{user.bio}} </span>
+        </div>
+
+        <div class="inscription">
+         <span> Incris depuis: {{user.createdAt}} </span>
+        </div>
+
+      </li>
+      </div>
+    </div>
+    
+
+
+              
 
     
-    <UserDetails />
-  </div>
+          
+        
+       
+  
 </template>
 
 <script>
-const axios = require("axios");
+const axios = require('axios');
 
-import UserDetails from "./UserDetails";
 export default {
-  name: "Users",
 
-  components: {
-    UserDetails,
-  },
+name: "Users",
+components: {
+    
+},
 
-  async data() {
-    return {
-      userProfil: {
-        username: "",
-        bio: "",
-      },
-    };
-  },
-  methods: {
-    getAllUsers() {
-      const options = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + sessionStorage.getItem("key"),
-        },
-      };
+data() {
+    return {  
+          
+          users: []
+}},
+mounted() {
+   
 
-      axios
-        .get("http://localhost:8080/api/auth/all", options)
-        .then((response) => {
-          this.username = response.data.username;
-          this.bio = response.data.bio;
-          console.log(response.data);
-        })
-        .catch((err) => console.log(err));
-    },
-  },
-};
+    axios
+    .get("http://localhost:8080/api/auth/all").then((response) => {
+        this.users = response.data
+    }, (response) => {
+      console.log('erreur', response.data)
+    })
+  }
+}
+
+
+
 </script>
+
+<style lang="scss" scoped>
+
+h1 {
+  color: rgb(5, 5, 116)
+  
+}
+
+h4 {
+  color: white;
+}
+
+li{
+  display:flex;
+  list-style: none;
+  color: rgb(253, 253, 253);
+  margin: 4px;
+  
+  border-radius: 20px;
+  
+  
+  
+
+    .pseudo {
+      width: 33%;
+      font-weight: bold;
+      
+
+    }
+
+
+ /* border: 2px solid black;*/
+}
+
+
+input {
+  margin-bottom: 30px;
+}
+
+.bio {
+  width:33%
+}
+
+span {
+ position: relative;
+ top: 10px;
+}
+</style>
+
