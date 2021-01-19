@@ -70,7 +70,7 @@ mounted() {
 
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 
 h1 {
   color: rgb(5, 5, 116)

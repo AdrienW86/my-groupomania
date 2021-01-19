@@ -2,6 +2,7 @@
   <div>
     <div class="block-post">
       <h1>Créer un post</h1>
+      
       <form enctype="multipart/form-data" action="/create" method="post">
         <div class="input-group mb-3">
           <label class="new_post" for="input_text">Votre nouveau message:</label>
@@ -17,17 +18,16 @@
             <input
               name="inputFile"
               type="file"
-              class="btn"
+              class="btn_fichier"
               id="inputFile"
               aria-describedby="inputFileAddon"
               @change="onFileChange"
             />
-            <button class="btn" for="inputFile">Choisissez un fichier</button>
+            
           </div>
         </div>
         <button type="submit" class="btn" @click.prevent="createPost" >Envoyer </button>
-        <span id='msgReturnAPI' class="mx-3 text-danger" v-if="user.token==null">Veuillez vous connecter</span>
-        <span id='msgReturnAPI' class="mx-3" v-else>{{msgError}}</span>
+       
       </form>
     </div>
   </div>
@@ -87,13 +87,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
 
 h1{
   color: rgb(5, 5, 116)
 }
 label.new_post{
-  color: white;
+  color: rgb(255, 255, 255);
 
 }
 .input-text {
@@ -102,10 +102,13 @@ label.new_post{
   margin-bottom: 20px;
 }
 input {
-  
-  color: rgb(252, 247, 247);
+  background: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
 }
 .btn {
-  background: green
+  background: rgb(228, 238, 90)
+}
+.btn {
+  background: rgb(35, 38, 197)
 }
 </style>

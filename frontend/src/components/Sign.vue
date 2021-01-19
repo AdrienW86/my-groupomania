@@ -47,50 +47,26 @@ export default {
       password : this.userInfos.password,
       };
 
-    if( userData.email == null || userData.username == null || userData.password == null) {
+      if( userData.email == null || userData.username == null || userData.password == null) {
         alert('Saisies invalides')
     
-    }else{
-      axios
-        .post("http://localhost:8080/api/auth/signup", userData)
-        .then((response) => {
-          if(response) {
-            this.saveSession(response.data.token, response.data.userId);
-            this.email = response.data.id.email
-            console.log(response.data.userId)
-            if (document.getElementById("div")) {
-              document.getElementById("div").style.visibility ="visible";
-              
-            }
-            
+      }else{
+        axios
+          .post("http://localhost:8080/api/auth/signup", userData)
+          .then((response) => {
+            if(response) {
+              this.saveSession(response.data.token, response.data.userId);
+              this.email = response.data.id.email
+              console.log(response.data.userId)
+              window.location.href = "/"
+
+                       
           }else{
             alert("données invalides")
           }
         }).catch((err) => console.log(err));
-
       } 
-    },
-    /*saveSession(token, userId) {
-      let sessionUserData = {};
-      axios
-        .get("http://localhost:8080/api/auth/me" + userId, {
-          headers: {
-            Authorization: "Bearer" + token,
-          },
-        }).then((response) => {
-          sessionUserData = response.data;
-          if(this.staySigned) {
-            localStorage.setItem("rester connecté", this.staySigned);
-          }
-          storage.setStorage("token", token);
-          storage.setStorage("isAdmin", sessionUserData.isAdmin);
-        }).catch((err) => {
-          console.log(err)
-        })
-
-        
-    }*/
-
+    }
   }
 }
 </script>
@@ -108,11 +84,13 @@ h1 {
   margin: auto;
   width: 200px;
   
+  
   input {
     margin-top: 10px;
     margin-bottom: 10px;
     height: 20px;
     width: 200px;
+    color: black;
   }
 
   button {

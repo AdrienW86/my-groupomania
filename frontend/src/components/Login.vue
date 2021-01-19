@@ -1,8 +1,11 @@
 <template>
     <section class="connexion">
-        <h1> Connectez-vous </h1>
-
+        
+        <h1> Bienvenue {{ userInfos.username}} </h1>
+            
             <form id="login">
+
+              <h1> Connectez-vous </h1>
 
         <label for="username"> Entrer votre pseudo </label>
           <input v-model="userInfos.username" name="username"  class="username" required>
@@ -30,17 +33,26 @@ export default {
         email: "",
         username: "",
         password: "",
-      }
+        isAdmin: "",
+        bio: "",
+      },
+    err: "",
     }
   },
 
   methods: {
 
-    login: async function () {
+  
+
+    
+
+    login:  function () {
       const userData = {
         email : this.userInfos.email,
         username: this.userInfos.username,
         password : this.userInfos.password,
+        isAdmin: this.userInfos.isAdmin,
+        bio: this.userInfos.bio
       };
 
     if( userData.email == true || userData.username == true || userData.password == true) {
@@ -49,44 +61,30 @@ export default {
     }else{
       axios
         .post("http://localhost:8080/api/auth/login", userData)
-        .then((response) => {
-          if(response) {
-            this.saveSession(response.data.token, response.data.userId);
-            this.email = response.data.id.email
-           
-            console.log(response.data.userId)
-            if (document.getElementById("div")) {
-              document.getElementById("div").style.visibility ="visible";
-              
-            }
-            
+        .then(response => {
+          if (response.status === 200) {
+            return response;
           }else{
-            alert("données invalides")
+            throw(response.status);
           }
-        }).catch((err) => console.log(err));
+        }).then(response => {
 
-      } 
-     
-    },
-    saveSession(token, userId) {
-      let sessionUserData = {};
-      axios
-        .get("http://localhost:8080/api/auth/me" + userId, {
-          headers: {
-            Authorization: "Bearer" + token,
-          },
-        }).then((response) => {
-          sessionUserData = response.data;
-          if(this.staySigned) {
-            localStorage.setItem("rester connecté", this.staySigned);
-          }
-          sessionStorage.setStorage("token", token);
-          sessionStorage.setStorage("isAdmin", sessionUserData.isAdmin);
-        }).catch((err) => {
+          sessionStorage.setItem("key", response.data.token);
+          sessionStorage.setItem("user", response.data.userId);
+          sessionStorage.setItem("username", response.data.username);
+          localStorage.setItem("privileges", response.data.isAdmin);
+          window.location.href = "#/about"
+           
+
+        }).catch(err =>{
           console.log(err)
-        })
 
-        
+        });
+            
+              
+           
+
+    }   
     }
 
   }
@@ -115,6 +113,7 @@ label {
     margin-bottom: 10px;
     height: 20px;
     width: 200px;
+    color:black;
   }
 
   button {

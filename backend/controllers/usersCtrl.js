@@ -9,6 +9,8 @@ const REGEX_PASSWORD = /^[a-zA-Z]\w{3,14}$/;
 
 // Routes
 
+// Création des utilisateurs
+
 exports.signup = (req, res, next) => {
 
     // Params
@@ -37,8 +39,8 @@ exports.signup = (req, res, next) => {
     })
     .then(userFound => {
         if (!userFound) {
-            bcrypt.hash(password, 10, function(err, bcryptedPassword) { 
-             
+                  bcrypt.hash(password, 10, function(err, bcryptedPassword) {
+
                 const newUser = models.User.create({
                     email: email,
                     username: username,
@@ -55,7 +57,7 @@ exports.signup = (req, res, next) => {
                     return res.status(500).json({ 'erreur': " impossible d'ajouter l'utilisateur " });
                 });
             });
-        }else{
+         }else{
             return res.status(409).json({ 'erreur': "l'utilisateur existe déjà "});
         }
     })
@@ -64,7 +66,7 @@ exports.signup = (req, res, next) => {
     });
 }
  
-//
+// Création du compte administrateur 
 
 exports.admin = (req, res, next) => {
 
@@ -79,22 +81,20 @@ exports.admin = (req, res, next) => {
         return res.status(400).json({ 'erreur': "paramètres manquants "});
     }
 
-    
-
     models.User.findOne({
         attributes: ['email'],
         where: { email: email }
     })
     .then(userFound => {
         if (!userFound) {
-            bcrypt.hash(password, 10, function(err, bcryptedPassword) { 
-             
+            bcrypt.hash(password , 10, function(err, bcryptedPassword) { 
+            
                 const newUser = models.User.create({
                     email: email,
                     username: username,
                     password: bcryptedPassword,
                     bio: bio,
-                    isAdmin: +1
+                    isAdmin: +1 
                 })
                 .then(newUser => {
                     return res.status(201).json({
@@ -114,9 +114,7 @@ exports.admin = (req, res, next) => {
     });
 }
 
-
-
-//
+// Se connecter
 
 exports.login = (req, res, next) => { 
 
@@ -138,7 +136,9 @@ exports.login = (req, res, next) => {
                 if(resBycrypt) {
                     return res.status(200).json({
                         'userId': userFound.id,
-                        'token': jwtUtils.generateTokenForUser(userFound)
+                        'token': jwtUtils.generateTokenForUser(userFound),
+                        'isAdmin': userFound.isAdmin,
+                        'username': userFound.username
                     });
 
                 }else{
@@ -164,7 +164,7 @@ exports.getUserProfil = (req, res, next) => {
     return res.status(400).json({ 'erreur': "token erroné" });
 
     models.User.findOne({
-        attributes: ['id', 'email','username','bio'],
+        attributes: ['id', 'email','username','bio',"isAdmin"],
         where: { id: userId }
     }).then(user => {
         if (user) {
