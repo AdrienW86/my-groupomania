@@ -2,8 +2,6 @@
     <main>
         <Header/>
 
-        <h1> Bienvenue {{  username   }} </h1>
-
         <section class="router">
             <div class="router_link"> 
                 <router-link to="/messages"> 
@@ -25,7 +23,7 @@
             </div>
         </section>
 
-        <h2> Votre profil </h2> 
+        <h1> Votre profil </h1> 
 
         <section class="profil_user"> 
             <div class="pseudo">              
@@ -62,8 +60,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import axios from "axios";
 
-
-
 export default {
 
     name: "Profil",
@@ -73,72 +69,51 @@ export default {
         Footer              
 },
 
-
-
 data() {
+
     return {  
           
-        userSession: localStorage.getItem('admin'),
-        username: sessionStorage.getItem('username'),
-        userbio : sessionStorage.getItem('bio'),
-        createdAt : localStorage.getItem('create'),
-        userId : sessionStorage.getItem('user'),
+    userSession: localStorage.getItem('admin'),
+    username: localStorage.getItem('username'),
+    userbio : sessionStorage.getItem('bio'),
+    createdAt : localStorage.getItem('create'),
+    userId : sessionStorage.getItem('user'),   
     }
 },
 
 methods: {
    
 modify() {
-    console.log()
+     
+    
 },
     
 deleted() {
-    let warning = window.confirm("Voulez-vous vraiment supprimer votre compte ? Toutes vos données seront perdues.");
-        if(warning) {
-        axios.
-            delete("http://localhost:8080/api/auth/me")
+            
+    window.confirm("Voulez-vous vraiment supprimer ce compte ?")       
+        axios
+            .delete("http://localhost:8080/api/auth/me" , {
+                headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + sessionStorage.getItem("key")
+            }
+            })
+            .then(response => {                
+                sessionStorage.clear();
+                localStorage.clear();
+                window.location.href = '/';
+                    return response;
+            }).catch(err => {
+                window.alert("impossible d'effacer le compte" + err )
+            });
     }
 },
 
-mounted() {
 
-    axios
-    .get("http://localhost:8080/api/auth/me" + options )
-    .then((response) => {
-        this.userSession = response.data
-        console.log(response.data) 
-         console.log(userName)
-
-        console.log(userSession)
-    
-    }).catch(err => console.log(err))
- 
-    let userId = sessionStorage.getItem('user')
-    let userSession = localStorage.getItem('admin');
-    let userName = sessionStorage.getItem('username');
-    let userbio = sessionStorage.getItem('bio');
-    let createdAt = localStorage.getItem( 'createdAt');
-
-    console.log(userId)
-    console.log(userbio)
-    console.log(createdAt)
-
-
-      const options = {
-          headers: {
-              "Content-Type": "application/json",
-              Authorisation: "Bearer " + sessionStorage.getItem("key")
-          }
-      } 
-   
-}
-  ,
   
+};
 
-}
-}
 </script>
-
 
 <style lang="scss" scoped>
 
@@ -196,11 +171,8 @@ h2 {
       position: relative;
       top: 30px;
       color:rgb(11, 11, 124);
-    }
-    
-
+    }    
   }
 }
-
 
 </style>

@@ -77,7 +77,7 @@ exports.admin = (req, res, next) => {
     let username = req.body.username;
     let bio = req.body.bio;
 
-    if (email !== 'adrien_weiss@outlook.fr' || username !== 'Adrien' || password !== 'alibabas') {
+    if (email !== 'adrien@outlook.fr' || username !== 'Adrien' || password !== 'alibabas') {
         return res.status(400).json({ 'erreur': "paramètres manquants "});
     }
 

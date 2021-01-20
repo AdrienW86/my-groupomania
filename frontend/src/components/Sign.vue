@@ -16,7 +16,7 @@
         <label for="password"> Entrer votre mot de passe </label>
            <input v-model="userInfos.password" name="password"  class="password" required>
 
-            <button id='sign_btn' type="submit" @click="sign()"> Valider </button>
+            <button id='sign_btn' type="submit" @click.stop.prevent="sign()"> Valider </button>
       </form>
       <Footer/>
     </div> 
@@ -48,7 +48,7 @@ export default {
 
   methods: {
 
-    sign: function () {
+    sign () {
       const userData = {
       email : this.userInfos.email,
       username: this.userInfos.username,
@@ -59,17 +59,15 @@ export default {
         alert('Saisies invalides')
     
       }else{
+        window.location.href ="/#/login"
         axios
           .post("http://localhost:8080/api/auth/signup", userData)
           .then((response) => {
             if(response) {
-              this.saveSession(response.data.token, response.data.userId);
-              this.email = response.data.id.email
+             
               console.log(response.data.userId)
-              window.location.href ="/"
-
-                       
-          }else{
+              
+            }else{
             alert("données invalides")
           }
         }).catch((err) => console.log(err));

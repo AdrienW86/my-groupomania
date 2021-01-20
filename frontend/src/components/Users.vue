@@ -1,21 +1,17 @@
 <template>
-
     <div id="table_user">
-      <Header/>
-      <h1>  Nos membres </h1>
-
+      <Header/>      
         <section class="router">
           <div class="router_link"> <router-link to="/messages"> <span class="router_link-txt"> Messages </span> </router-link> </div>
           <div class="router_link"> <router-link to="/users"> <span class="router_link-txt"> Membres </span> </router-link> </div>
           <div class="router_link"> <router-link to="/profil"> <span class="router_link-txt"> Mon Profil </span> </router-link> </div>
         </section>
-
-      <h2> Rechercher un utilisateur </h2>  
-
+      <h1>  Nos membres        
+      </h1>
+        <h2> Rechercher un utilisateur 
+        </h2>  
         <input type="search" @keyup="search()" id="recherche" />
-
-      <div class="user-infos" >
-    
+      <div class="user-infos" >    
         <li v-for="user in users" :key="user.id">
           <div class="pseudo">
             <span class="infos">{{user.username}} </span>
@@ -32,17 +28,7 @@
         </li>
       </div>
       <Footer/>
-    </div>
-    
-
-
-              
-
-    
-          
-        
-       
-  
+    </div>                                            
 </template>
 
 <script>

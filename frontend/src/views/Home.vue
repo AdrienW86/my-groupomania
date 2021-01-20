@@ -10,7 +10,7 @@
       <h2> Connectez-vous ou inscrivez-vous </h2>
 
       <p> afin de pouvoir rejoindre la communautée 
-          my Groupomania déjà présent sur le site. </p>
+          my Groupomania déjà présente sur le site. </p>
     </section>
 
      <Footer/>    

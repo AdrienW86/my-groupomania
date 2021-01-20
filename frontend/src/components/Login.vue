@@ -15,7 +15,7 @@
         <label for="password"> Entrer votre mot de passe </label>
            <input v-model="userInfos.password" name="password"  class="password" required>
 
-            <button id='login_btn' type="submit" @click="login()"> Valider </button>
+            <button id='login_btn' type="submit" @click.stop.prevent="login()"> Valider </button>
       </form>
       <Footer/>
     </section>
@@ -26,7 +26,6 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import axios from 'axios';
-
 
 export default {
   name: 'Login',
@@ -60,12 +59,11 @@ login() {
     isAdmin: this.userInfos.isAdmin,
     bio: this.userInfos.bio,
     createdAt : this.userInfos.createdAt,
-    isLog : this.userInfos.islog,
-    
+    isLog : this.userInfos.isLog,    
   };
-
+  
   if( userData.email == true || userData.username == true || userData.password == true) {
-      alert('Saisies invalides')
+      window.alert("Données invalides")
     }else{
       axios
         .post("http://localhost:8080/api/auth/login", userData)
@@ -73,21 +71,23 @@ login() {
           if (response.status === 200) {
             
             return response;
-          }else{
+          }else{ 
+            window.alert("Données invalides")
             throw(response.status);
           }
         }).then(response => {
-          sessionStorage.setItem("key", response.data.token);
-          sessionStorage.setItem("user", response.data.userId);
-          sessionStorage.setItem("username", response.data.username);
-          sessionStorage.setItem("bio", response.data.bio);
-          localStorage.setItem("admin", response.data.isAdmin);
-          localStorage.setItem("create",response.data.createdAt);
-          localStorage.setItem("islog", response.data.islog);
-          window.location.href = "/#/profil"
-          console.log(response.data)
+            localStorage.setItem("key", response.data.token);
+            localStorage.setItem("user", response.data.userId);
+            localStorage.setItem("username", response.data.username);
+            localStorage.setItem("bio", response.data.bio);
+            localStorage.setItem("isAdmin", response.data.isAdmin);
+            localStorage.setItem("createdAt",response.data.createdAt);
+            localStorage.setItem("islog", response.data.isLog);
+
+              window.location.href = "/#/profil"
+              console.log(response.data)
         }).catch(err =>{
-          console.log(err)
+              console.log(err)
         });
       }   
     }

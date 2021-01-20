@@ -3,41 +3,58 @@
     <Header/>
     <div class="block-post">
 
-      <h1>Créer un post</h1>
+  
 
       <section class="router">
-          <div class="router_link"> <router-link to="/messages"> <span> Messages </span> </router-link> </div>
-          <div class="router_link"> <router-link to="/users"> <span> Membres </span> </router-link> </div>
-          <div class="router_link"> <router-link to="/profil"> <span> Mon Profil </span> </router-link> </div>
-        </section>
-      
-      <form enctype="multipart/form-data" action="/create" method="post">
-        <div class="input-group mb-3">
-          <label class="new_post" for="input_text">Votre nouveau message:</label>
-          <br />
-          <input v-model="contentPost.content" class="input-text" id="input_text" type="text" />
+        <div class="router_link"> 
+          <router-link to="/messages"> 
+            <span> Messages 
+            </span> 
+          </router-link> 
         </div>
+        <div class="router_link"> 
+          <router-link to="/users"> 
+            <span> Membres 
+            </span> 
+          </router-link> 
+        </div>
+        <div class="router_link"> 
+          <router-link to="/profil"> 
+            <span> Mon Profil 
+            </span> 
+          </router-link> 
+        </div>
+      </section>
 
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            
+       <h1>Créer un post</h1>
+
+        
+        <form enctype="multipart/form-data" action="/create" method="post">
+          <div class="input-group mb-3">
+            <label class="new_post" for="input_text">Votre nouveau message:
+            </label>
+            <br />
+            <input v-model="contentPost.content" class="input-text" id="input_text" type="text" />
           </div>
-          <div class="custom-file">
-            <input
-              name="inputFile"
-              type="file"
-              class="btn_fichier"
-              id="inputFile"
-              aria-describedby="inputFileAddon"
-              @change="onFileChange"
-            />
-            
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            </div>
+            <div class="custom-file">
+              <input
+                name="inputFile"
+                type="file"
+                class="btn_fichier"
+                id="inputFile"
+                aria-describedby="inputFileAddon"
+                @change="onFileChange"
+              />            
+            </div>
           </div>
-        </div>
-        <button type="submit" class="btn" @click.prevent="createPost" >Envoyer </button>
-       
-      </form>
-    </div>
+          <button type="submit" 
+            class="btn" @click.prevent="createPost" >Envoyer 
+          </button>
+        </form>
+      </div>
     <Footer/>
   </div>
 </template>
@@ -59,7 +76,9 @@ export default {
     return {
       contentPost: {
         content: null,
-        postImage: null
+        postImage: null,
+
+
       },
       msgError: ""
     };
@@ -70,6 +89,7 @@ export default {
 
   methods: {
     createPost() {
+
       console.log(this.contentPost);
       const newPost = new FormData();
       newPost.append("inputFile", this.contentPost.postImage);
@@ -101,7 +121,11 @@ export default {
       this.contentPost.postImage = e.target.files[0] || e.dataTransfer.files;
       console.log(this.contentPost.postImage);
     }
-  }
+  },
+mounted() {  
+  
+  
+}
 };
 </script>
 
@@ -141,7 +165,7 @@ export default {
 }
 
 h1{
-  color: rgb(5, 5, 116)
+  color: rgb(255, 255, 255)
 }
 
 label.new_post{

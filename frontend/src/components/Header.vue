@@ -11,8 +11,19 @@
             </nav>  
 
                         <h2> {{ username }} </h2>
-                    <div v-if="isAdmin == true">  <p> Status : Administrateur  </p></div>
-                    <div  v-else-if="isAdmin == false">  <p> Status : Membre  </p></div>
+
+                        <div v-if="userId == 37">
+          <p> Status : Administrateur  </p>
+          
+        </div>
+        <div v-else-if="userId >= 37">  
+          <p> Status : Membre  </p>
+        </div> 
+        
+        <div v-else> <p> Déconnecté</p>
+          
+        </div>                         
+                    
     </header>
 </template>
 
@@ -24,11 +35,11 @@ export default {
 data() {
     return {
         isLogged: "",
-        isAdmin: localStorage.getItem('admin'),
-        username: sessionStorage.getItem('username'),
-        userbio : sessionStorage.getItem('bio'),
+        isAdmin: "",
+        username: localStorage.getItem('username'),
+        userbio : localStorage.getItem('bio'),
         createdAt : localStorage.getItem('create'),
-        userId : sessionStorage.getItem('user'),
+        userId : localStorage.getItem('user'),
     }
     
 },
@@ -53,7 +64,7 @@ methods: {
     disconnect() {
         sessionStorage.clear()
         localStorage.clear()
-        window.location.href = '/login'
+        window.location.href = '/'
     }
 },
 
