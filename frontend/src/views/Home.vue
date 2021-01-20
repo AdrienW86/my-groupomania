@@ -1,28 +1,44 @@
 <template>
 
+  <div class="home"> 
+    <Header/>
 
-  <div class="home">
-    
-    <Login/>
-    
-    
+    <h1> Bienvenue <br> 
+    sur my Groupomania ! </h1> 
 
-   
+    <section>
+      <h2> Connectez-vous ou inscrivez-vous </h2>
+
+      <p> afin de pouvoir rejoindre la communautée 
+          my Groupomania déjà présent sur le site. </p>
+    </section>
+
+     <Footer/>    
   </div> 
 </template>
 
 <script>
-// @ is an alias to /src
-import Login from '@/components/Login.vue';
 
-
-
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default {
+
   name: 'Home',
+
   components: {
-    Login,
-    
+    Header,
+    Footer,       
   }
 }
 </script>
+
+<style lang="scss" scoped>
+ 
+ h1 {
+   margin-top: 40px;
+   padding-top: 20px;
+   padding-bottom: 20px;
+   color:white;
+ }
+</style>

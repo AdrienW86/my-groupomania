@@ -1,8 +1,9 @@
 <template>
 
   <div class="sign">
+     <Header/>
 
-    <h1> Créer un compte </h1>
+     <h1> Créer un compte </h1>
 
       <form id="signup">
 
@@ -10,23 +11,30 @@
           <input v-model="userInfos.username" name="username"  class="username" required>
 
         <label for="email"> Entrer votre adresse mail </label>
-          <input v-model="userInfos.email" name="email"  class="email" required> <p> {{userInfos.email}}</p>
+          <input v-model="userInfos.email" name="email"  class="email" required> 
 
         <label for="password"> Entrer votre mot de passe </label>
            <input v-model="userInfos.password" name="password"  class="password" required>
 
             <button id='sign_btn' type="submit" @click="sign()"> Valider </button>
       </form>
-
+      <Footer/>
     </div> 
        
 </template>
 
 <script>
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import axios from 'axios';
 
 export default {
   name: 'Sign',
+
+  components: {
+    Header,
+    Footer
+  },
 
   data() {
     return {

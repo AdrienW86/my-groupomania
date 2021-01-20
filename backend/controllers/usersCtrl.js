@@ -138,7 +138,8 @@ exports.login = (req, res, next) => {
                         'userId': userFound.id,
                         'token': jwtUtils.generateTokenForUser(userFound),
                         'isAdmin': userFound.isAdmin,
-                        'username': userFound.username
+                        'username': userFound.username,
+                        'isLog': +1
                     });
 
                 }else{
@@ -164,7 +165,7 @@ exports.getUserProfil = (req, res, next) => {
     return res.status(400).json({ 'erreur': "token erroné" });
 
     models.User.findOne({
-        attributes: ['id', 'email','username','bio',"isAdmin"],
+    attributes: ['id', 'email','username','bio',"isAdmin","createdAt","updatedAt"],
         where: { id: userId }
     }).then(user => {
         if (user) {

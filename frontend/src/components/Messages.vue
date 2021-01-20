@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Header/>
     <div class="block-post">
 
       <h1>Créer un post</h1>
@@ -37,21 +38,21 @@
        
       </form>
     </div>
+    <Footer/>
   </div>
 </template>
 
 <script>
 
 import axios from "axios";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default {
 
- 
-
   components: {
-
-   
-
+    Header,
+    Footer  
   },
 
   data() {
@@ -125,6 +126,10 @@ export default {
     background-image: radial-gradient(farthest-corner at 60px 60px,
       #f35 0%, rgb(202, 200, 228) 100%);;
 
+    &:hover {
+       transform: scale(1.1);
+    }
+
     span {
       display: inline-block;
       vertical-align: center;
@@ -132,34 +137,29 @@ export default {
       top: 30px;
       color:rgb(11, 11, 124);
     }
-    
-
   }
 }
-
 
 h1{
   color: rgb(5, 5, 116)
 }
+
 label.new_post{
   color: rgb(255, 255, 255);
 
 }
+
 .input-text {
   width: 80%;
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
 input {
   background: rgb(255, 255, 255);
   color: rgb(0, 0, 0);
 }
-.btn {
-  background: rgb(228, 238, 90)
-}
-.btn {
-  background: rgb(35, 38, 197)
-}
+
 
 
 </style>

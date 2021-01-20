@@ -1,9 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Profil from '../views/Profil.vue'
-import Messages from '../views/Messages.vue'
-import Users from '../views/Users.vue'
+
 
 Vue.use(VueRouter)
 
@@ -14,8 +12,16 @@ const routes = [
     component: Home
   },
   {
+    path: '/login',
+    name: 'Login',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../components/Login.vue')
+  },  
+  {
     path: '/sign',
-    name: 'Signup',
+    name: 'Sign',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -24,17 +30,26 @@ const routes = [
   {
     path: '/profil',
     name: 'Profil',
-    component: Profil
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../components/Profil')
   },
   {
     path: '/messages',
     name: 'Messages',
-    component: Messages
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../components/Messages')
   },
   {
     path: '/users',
     name: 'Users',
-    component: Users
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../components/Users')
   }
 ]
 

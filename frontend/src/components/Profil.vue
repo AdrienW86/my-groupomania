@@ -1,7 +1,8 @@
 <template>
     <main>
-        
-        <h1> Bienvenue {{  }} </h1>
+        <Header/>
+
+        <h1> Bienvenue {{  username   }} </h1>
 
         <section class="router">
             <div class="router_link"> 
@@ -28,13 +29,13 @@
 
         <section class="profil_user"> 
             <div class="pseudo">              
-                {{ "Big Yaso" }}                               
+                {{ username }}                               
             </div> 
             <div class="bio">                
-                {{ "bigraphie d'une belle gosse" }}                                
+                {{ userbio }}                                
             </div>
             <div class="inscription">
-                {{ "inscrite depuis toujours" }}                      
+                {{ createdAt }}                      
             </div>
             <div class="">
                 <a class="btn-profil"  type="submit" @click="modify()">
@@ -50,13 +51,17 @@
             </div>
         </section>
 
-
+        <Footer/>
 
     </main>
 </template>
 
 <script>
+
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import axios from "axios";
+
 
 
 export default {
@@ -64,7 +69,8 @@ export default {
     name: "Profil",
 
     components: {
-        
+        Header,
+        Footer              
 },
 
 
@@ -72,40 +78,64 @@ export default {
 data() {
     return {  
           
-        userInfos : {
-        email: "",
-        username: "",
-        password: "",
-        isAdmin: "",
-        bio: "",
-      },
-}},
+        userSession: localStorage.getItem('admin'),
+        username: sessionStorage.getItem('username'),
+        userbio : sessionStorage.getItem('bio'),
+        createdAt : localStorage.getItem('create'),
+        userId : sessionStorage.getItem('user'),
+    }
+},
+
 methods: {
-
-    modify() {
-        console.log()
-    },
+   
+modify() {
+    console.log()
+},
     
-    deleted() {
-        let warning = window.confirm("Voulez-vous vraiment supprimer votre compte ? Toutes vos données seront perdues.");
-            if(warning) {
-                axios.
-                    delete("http://localhost:8080/api/auth/me")
-            }
+deleted() {
+    let warning = window.confirm("Voulez-vous vraiment supprimer votre compte ? Toutes vos données seront perdues.");
+        if(warning) {
+        axios.
+            delete("http://localhost:8080/api/auth/me")
+    }
+},
 
-    },
-
-    mounted() {
+mounted() {
 
     axios
-    .get("http://localhost:8080/api/auth/me").then((response) => {
-        this.users = response.data
+    .get("http://localhost:8080/api/auth/me" + options )
+    .then((response) => {
+        this.userSession = response.data
         console.log(response.data) 
-    })
-  }
+         console.log(userName)
+
+        console.log(userSession)
+    
+    }).catch(err => console.log(err))
+ 
+    let userId = sessionStorage.getItem('user')
+    let userSession = localStorage.getItem('admin');
+    let userName = sessionStorage.getItem('username');
+    let userbio = sessionStorage.getItem('bio');
+    let createdAt = localStorage.getItem( 'createdAt');
+
+    console.log(userId)
+    console.log(userbio)
+    console.log(createdAt)
+
+
+      const options = {
+          headers: {
+              "Content-Type": "application/json",
+              Authorisation: "Bearer " + sessionStorage.getItem("key")
+          }
+      } 
+   
 }
+  ,
+  
 
-
+}
 }
 </script>
 
@@ -155,6 +185,10 @@ h2 {
     -webkit-box-shadow: 1px 5px 16px 10px rgba(187, 183, 183, 0.4);
     background-image: radial-gradient(farthest-corner at 60px 60px,
       #f35 0%, rgb(202, 200, 228) 100%);;
+
+    &:hover {
+       transform: scale(1.1);
+    }
 
     span {
       display: inline-block;

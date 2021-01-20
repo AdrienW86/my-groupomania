@@ -1,8 +1,7 @@
 <template>
+
     <div id="table_user">
-
-
-
+      <Header/>
       <h1>  Nos membres </h1>
 
         <section class="router">
@@ -11,32 +10,28 @@
           <div class="router_link"> <router-link to="/profil"> <span class="router_link-txt"> Mon Profil </span> </router-link> </div>
         </section>
 
-        <h2> Rechercher un utilisateur </h2>  
+      <h2> Rechercher un utilisateur </h2>  
 
-        <input type="text" @keyup="search()" id="recherche" />
+        <input type="search" @keyup="search()" id="recherche" />
 
       <div class="user-infos" >
     
-      <li v-for="user in users" :key="user.id">
-
-        <div class="pseudo">
-          <span class="infos">{{user.username}} </span>
-        </div> 
-
-        <div class="bio">
-         <span class="infos">{{user.bio}} </span>
-        </div>
-
-        <div class="inscription">
-         <span class="infos">  Incris depuis: {{user.createdAt}} </span>
-        </div>
-
-        <div class="voir_membre">
-          <button class="see_user" @click="login()"> Voir </button>
-        </div>
-
-      </li>
+        <li v-for="user in users" :key="user.id">
+          <div class="pseudo">
+            <span class="infos">{{user.username}} </span>
+          </div> 
+          <div class="bio">
+            <span class="infos">{{user.bio}} </span>
+          </div>
+          <div class="inscription">
+            <span class="infos">  Incris depuis: {{user.createdAt}} </span>
+          </div>
+          <div class="voir_membre">
+            <button class="see_user" @click="getOneUser()"> Voir </button>
+          </div>
+        </li>
       </div>
+      <Footer/>
     </div>
     
 
@@ -53,11 +48,15 @@
 <script>
 const axios = require('axios');
 
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
 export default {
 
 name: "Users",
 components: {
-  
+  Header,
+  Footer
   
     
 },
@@ -73,22 +72,24 @@ data() {
 methods: {
   
 search () {
-   document.getElementById('recherche').addEventListener('keyup', function() {
-  var recherche = this.value.toLowerCase();
-  var documents = document.querySelectorAll('.infos');
+    document.getElementById('recherche').addEventListener('keyup', function() {
+    var recherche = this.value.toLowerCase();
+    var documents = document.querySelectorAll('.infos');
  
-  Array.prototype.forEach.call(documents, function(document) {
-    // On a bien trouvé les termes de recherche.
-    if (document.innerHTML.toLowerCase().indexOf(recherche) > -1) {
-      document.style.display = 'block';
-    } else {
-      document.style.display = 'none';
-    }
+    Array.prototype.forEach.call(documents, function(document) {
+      // On a bien trouvé les termes de recherche.
+      if (document.innerHTML.toLowerCase().indexOf(recherche) > -1) {
+        document.style.display = 'block';
+      } else {
+        document.style.display = 'none';
+      }
+    });
   });
-});
+},
 
-}
+getOneUser() {
 
+},
 
 
 
@@ -102,7 +103,7 @@ mounted() {
     .get("http://localhost:8080/api/auth/all").then((response) => {
         this.users = response.data
     }, (response) => {
-      console.log('erreur', response.data)
+      console.log(response.data)
     })
   }
 }
@@ -135,10 +136,9 @@ h2 {
     height: 80px;
     width: 80px;
     box-shadow: 1px 5px 16px 10px rgba(187, 183, 183, 0.4);
-   -moz-box-shadow: 1px 5px 16px 10px rgba(187, 183, 183, 0.4);
-    -webkit-box-shadow: 1px 5px 16px 10px rgba(187, 183, 183, 0.4);
     background-image: radial-gradient(farthest-corner at 60px 60px,
       #f35 0%, rgb(202, 200, 228) 100%);
+      
       &:hover {
        transform: scale(1.1);
       }

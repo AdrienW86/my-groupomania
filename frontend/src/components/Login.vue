@@ -1,9 +1,8 @@
 <template>
     <section class="connexion">
-        
-        <h1> Bienvenue {{ userInfos.username}} </h1>
-            
-            <form id="login">
+        <Header/>
+
+      <form id="login">
 
               <h1> Connectez-vous </h1>
 
@@ -11,21 +10,31 @@
           <input v-model="userInfos.username" name="username"  class="username" required>
 
         <label for="email"> Entrer votre adresse mail </label>
-          <input v-model="userInfos.email" name="email"  class="email" required> <p> {{userInfos.email}}</p>
+          <input v-model="userInfos.email" name="email"  class="email" required> 
 
         <label for="password"> Entrer votre mot de passe </label>
            <input v-model="userInfos.password" name="password"  class="password" required>
 
             <button id='login_btn' type="submit" @click="login()"> Valider </button>
       </form>
+      <Footer/>
     </section>
+    
 </template>
 
 <script>
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import axios from 'axios';
+
 
 export default {
   name: 'Login',
+
+  components: {
+    Header,
+    Footer   
+  },
 
   data() {
     return {
@@ -35,58 +44,53 @@ export default {
         password: "",
         isAdmin: "",
         bio: "",
+        createdAt: "",
       },
     err: "",
     }
   },
 
-  methods: {
+methods: {
 
-  
-
+login() {
+  const userData = {
+    email : this.userInfos.email,
+    username: this.userInfos.username,
+    password : this.userInfos.password,
+    isAdmin: this.userInfos.isAdmin,
+    bio: this.userInfos.bio,
+    createdAt : this.userInfos.createdAt,
+    isLog : this.userInfos.islog,
     
+  };
 
-    login:  function () {
-      const userData = {
-        email : this.userInfos.email,
-        username: this.userInfos.username,
-        password : this.userInfos.password,
-        isAdmin: this.userInfos.isAdmin,
-        bio: this.userInfos.bio
-      };
-
-    if( userData.email == true || userData.username == true || userData.password == true) {
-        alert('Saisies invalides')
-    
+  if( userData.email == true || userData.username == true || userData.password == true) {
+      alert('Saisies invalides')
     }else{
       axios
         .post("http://localhost:8080/api/auth/login", userData)
         .then(response => {
           if (response.status === 200) {
+            
             return response;
           }else{
             throw(response.status);
           }
         }).then(response => {
-
           sessionStorage.setItem("key", response.data.token);
           sessionStorage.setItem("user", response.data.userId);
           sessionStorage.setItem("username", response.data.username);
-          localStorage.setItem("privileges", response.data.isAdmin);
-          window.location.href = "#/profil"
-           
-
+          sessionStorage.setItem("bio", response.data.bio);
+          localStorage.setItem("admin", response.data.isAdmin);
+          localStorage.setItem("create",response.data.createdAt);
+          localStorage.setItem("islog", response.data.islog);
+          window.location.href = "/#/profil"
+          console.log(response.data)
         }).catch(err =>{
           console.log(err)
-
         });
-            
-              
-           
-
-    }   
+      }   
     }
-
   }
 }
 
