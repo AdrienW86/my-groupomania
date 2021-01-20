@@ -1,7 +1,14 @@
 <template>
   <div>
     <div class="block-post">
+
       <h1>Créer un post</h1>
+
+      <section class="router">
+          <div class="router_link"> <router-link to="/messages"> <span> Messages </span> </router-link> </div>
+          <div class="router_link"> <router-link to="/users"> <span> Membres </span> </router-link> </div>
+          <div class="router_link"> <router-link to="/profil"> <span> Mon Profil </span> </router-link> </div>
+        </section>
       
       <form enctype="multipart/form-data" action="/create" method="post">
         <div class="input-group mb-3">
@@ -34,10 +41,19 @@
 </template>
 
 <script>
+
 import axios from "axios";
-import { mapState } from "vuex";
+
 export default {
-  name: "CreatePost",
+
+ 
+
+  components: {
+
+   
+
+  },
+
   data() {
     return {
       contentPost: {
@@ -48,8 +64,9 @@ export default {
     };
   },
   computed: {
-    ...mapState(["user", "editOption"])
+    
   },
+
   methods: {
     createPost() {
       console.log(this.contentPost);
@@ -89,6 +106,38 @@ export default {
 
 <style scoped lang="scss">
 
+.router {
+  display: flex;
+  justify-content: space-around;
+  text-decoration: none;
+  margin-bottom: 50px;
+  margin-top: 50px;
+
+  .router_link {
+    font-weight: bold;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+    box-shadow: 1px 5px 16px 10px rgba(187, 183, 183, 0.4);
+   -moz-box-shadow: 1px 5px 16px 10px rgba(187, 183, 183, 0.4);
+    -webkit-box-shadow: 1px 5px 16px 10px rgba(187, 183, 183, 0.4);
+    background-image: radial-gradient(farthest-corner at 60px 60px,
+      #f35 0%, rgb(202, 200, 228) 100%);;
+
+    span {
+      display: inline-block;
+      vertical-align: center;
+      position: relative;
+      top: 30px;
+      color:rgb(11, 11, 124);
+    }
+    
+
+  }
+}
+
+
 h1{
   color: rgb(5, 5, 116)
 }
@@ -111,4 +160,6 @@ input {
 .btn {
   background: rgb(35, 38, 197)
 }
+
+
 </style>

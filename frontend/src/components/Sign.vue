@@ -58,7 +58,7 @@ export default {
               this.saveSession(response.data.token, response.data.userId);
               this.email = response.data.id.email
               console.log(response.data.userId)
-              window.location.href = "/"
+              window.location.href ="/"
 
                        
           }else{

@@ -73,7 +73,7 @@ export default {
           sessionStorage.setItem("user", response.data.userId);
           sessionStorage.setItem("username", response.data.username);
           localStorage.setItem("privileges", response.data.isAdmin);
-          window.location.href = "#/about"
+          window.location.href = "#/profil"
            
 
         }).catch(err =>{
@@ -120,15 +120,16 @@ label {
     margin-top: 20px;
     margin-right: 50px;
     margin-left:50px;
+    margin-bottom: 50px;
     width: 100px;
     height: 30px;
     border-radius: 10px;
     color:#f1f0f5;
-    background-color: red;
+    background-color: #30289e;
     font-weight: bold;
 
       &:hover {
-        color: #1fb931;
+       transform: scale(1.1);
       }
   }
 }

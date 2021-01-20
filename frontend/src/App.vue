@@ -24,6 +24,7 @@ export default {
 
 <style lang="scss">
 
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -32,20 +33,7 @@ export default {
   color: #2c3e50;
   background: linear-gradient(#0d1997,#ff0707, );
 }
-#nav {
-  padding: 30px;
-  display: flex;
-  
-  img {
-    width: 200px;
-  }
-    a {
-    font-weight: bold;
-    color: #e2e8ee;
 
-      &.router-link-exact-active {
-      color: #fa0c0c;
-    }
-  }
-}
+
+
 </style>
