@@ -49,8 +49,10 @@ components: {
 
 data() {
     return {  
-    
- 
+       
+        
+        
+        
           
           users: []
 }},
@@ -59,8 +61,8 @@ methods: {
   
 search () {
     document.getElementById('recherche').addEventListener('keyup', function() {
-    var recherche = this.value.toLowerCase();
-    var documents = document.querySelectorAll('.infos');
+    let recherche = this.value.toLowerCase();
+    let documents = document.querySelectorAll('.infos');
  
     Array.prototype.forEach.call(documents, function(document) {
       // On a bien trouvé les termes de recherche.
@@ -73,6 +75,13 @@ search () {
   });
 },
 
+changeDate() {
+     
+       this.user.createdAt = this.user.createdAt.replace("T", "à")
+       this.user.createdAt = this.user.createdAt.replace("T", "à")
+  
+},
+
 getOneUser() {
 
 },
@@ -83,18 +92,29 @@ getOneUser() {
 
 
 mounted() {
-   
+    
 
     axios
-    .get("http://localhost:8080/api/auth/all").then((response) => {
-        this.users = response.data
-    }, (response) => {
-      console.log(response.data)
+    .get("http://localhost:8080/api/auth/all")
+
+    .then((response) => {
+     this.users = response.data
+      for  (let i = 0; i < this.users.length; i++) {
+       console.log(this.users[i].createdAt)
+       this.users[i].createdAt = this.users[i].createdAt.replace("T", " à ")
+       this.users[i].createdAt = this.users[i].createdAt.replace(".000Z", "")
+      }   
+     
+        
+    
+    }).catch((err) => {
+      console.log(err)
     })
-  }
-}
 
-
+},
+  
+ 
+}        
 
 </script>
 
@@ -135,13 +155,9 @@ h2 {
       position: relative;
       top: 30px;
       color:rgb(11, 11, 124);
-    }
-    
-    
-
+    }    
   }
 }
-
 
 li{
   display:flex;
@@ -159,6 +175,7 @@ li{
       overflow: hidden;
       text-overflow: ellipsis; 
     }
+
 .see_user {
   background:rgb(252, 252, 252);
   color: blue;
