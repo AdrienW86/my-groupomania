@@ -1,33 +1,35 @@
 <template>
     <div id="table_user">
-      <Header/>      
-        <section class="router">
-          <div class="router_link"> <router-link to="/messages"> <span class="router_link-txt"> Messages </span> </router-link> </div>
-          <div class="router_link"> <router-link to="/users"> <span class="router_link-txt"> Membres </span> </router-link> </div>
-          <div class="router_link"> <router-link to="/profil"> <span class="router_link-txt"> Mon Profil </span> </router-link> </div>
-        </section>
-      <h1>  Nos membres        
-      </h1>
-        <h2> Rechercher un utilisateur 
-        </h2>  
-        <input type="search" @keyup="search()" id="recherche" />
-      <div class="user-infos" >    
-        <li v-for="user in users" :key="user.id">
-          <div class="pseudo">
-            <span class="infos">{{user.username}} </span>
-          </div> 
-          <div class="bio">
-            <span class="infos">{{user.bio}} </span>
-          </div>
-          <div class="inscription">
-            <span class="infos">  Incris depuis: {{user.createdAt}} </span>
-          </div>
-          <div class="voir_membre">
-            <button class="see_user" @click="getOneUser()"> Voir </button>
-          </div>
-        </li>
-      </div>
-      <Footer/>
+      <Header/> 
+        <Menu/>      
+          <h1> Nos membres </h1>
+            <h2> Rechercher un utilisateur </h2>  
+              <input type="search" @keyup="search()" id="recherche" />
+               <div class="user-infos" >    
+                  <li class="element" v-for="user in users" :key="user.id">
+                    <section class="identity">
+                      <div class="pseudo">
+                        <span class="infos">{{user.username}} </span>
+                      </div> 
+                      
+                        <div class="inscription">
+                          <span class="infos">  Membre depuis: {{user.createdAt}} </span>
+                        </div>
+                        <div class="voir_membre">
+                          <button class="see_user" @click="getOneUser()"> Voir </button>
+                        </div>
+                     
+                    </section>
+                    <section class="about_user">
+                    <div class="bio">
+                      <span class="infos">{{user.bio}} </span>
+                    </div>
+                    
+                   
+                    </section>
+                  </li>
+                </div>
+        <Footer/>
     </div>                                            
 </template>
 
@@ -35,6 +37,7 @@
 const axios = require('axios');
 
 import Header from "../components/Header";
+import Menu from "../components/Menu"
 import Footer from "../components/Footer";
 
 export default {
@@ -42,79 +45,55 @@ export default {
 name: "Users",
 components: {
   Header,
-  Footer
-  
-    
+  Menu,
+  Footer   
 },
 
 data() {
     return {  
-       
-        
-        
-        
-          
-          users: []
-}},
+      users: []
+  }
+},
 
 methods: {
   
-search () {
+  search () {
     document.getElementById('recherche').addEventListener('keyup', function() {
     let recherche = this.value.toLowerCase();
-    let documents = document.querySelectorAll('.infos');
+    let documents = document.querySelectorAll('.element');
  
     Array.prototype.forEach.call(documents, function(document) {
       // On a bien trouvé les termes de recherche.
       if (document.innerHTML.toLowerCase().indexOf(recherche) > -1) {
         document.style.display = 'block';
-      } else {
+      }else{
         document.style.display = 'none';
       }
     });
   });
 },
 
-changeDate() {
-     
-       this.user.createdAt = this.user.createdAt.replace("T", "à")
-       this.user.createdAt = this.user.createdAt.replace("T", "à")
-  
+  getOneUser() {
+
+  }
 },
 
-getOneUser() {
-
-},
-
-
-
-},
-
-
-mounted() {
+  mounted() {
     
-
     axios
     .get("http://localhost:8080/api/auth/all")
-
     .then((response) => {
      this.users = response.data
       for  (let i = 0; i < this.users.length; i++) {
        console.log(this.users[i].createdAt)
        this.users[i].createdAt = this.users[i].createdAt.replace("T", " à ")
        this.users[i].createdAt = this.users[i].createdAt.replace(".000Z", "")
-      }   
-     
-        
-    
+      }      
     }).catch((err) => {
       console.log(err)
     })
-
-},
-  
- 
-}        
+  }
+}       
 
 </script>
 
@@ -128,46 +107,20 @@ h2 {
   color: white;
 }
 
-.router {
-  display: flex;
-  justify-content: space-around;
-  text-decoration: none;
-  margin-bottom: 50px;
-  margin-top: 50px;
-
-  .router_link {
-    font-weight: bold;
-    border: 2px solid rgb(255, 255, 255);
-    border-radius: 100%;
-    height: 80px;
-    width: 80px;
-    box-shadow: 1px 5px 16px 10px rgba(187, 183, 183, 0.4);
-    background-image: radial-gradient(farthest-corner at 60px 60px,
-      #f35 0%, rgb(202, 200, 228) 100%);
-      
-      &:hover {
-       transform: scale(1.1);
-      }
-
-  .router_link-txt {
-      display: inline-block;
-      vertical-align: center;
-      position: relative;
-      top: 30px;
-      color:rgb(11, 11, 124);
-    }    
-  }
-}
-
-li{
+li {
   display:flex;
+  flex-direction: column;
+  
   list-style: none;
   color: rgb(253, 253, 253);  
   border: 2px solid white;
-  height: 70px;
+  height: 120px;
+  width: 100%;
   
-    .pseudo {
-      width: 33%;
+    .identity {
+      display: flex;
+      height: 50px;
+      width: 100%;
       font-weight: bold;
       text-align: left;
       padding-left: 2%;
@@ -176,35 +129,53 @@ li{
       text-overflow: ellipsis; 
     }
 
-.see_user {
-  background:rgb(252, 252, 252);
-  color: blue;
-  font-weight: bold;
+    .box_infos {
+      display: flex;
+    }
 
-    &:hover {
-       transform: scale(1.1);
-       color: red
+    .about_user {
+      
+      padding-left: 30%;
+      padding-right: 10%;
+      height: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis; 
+    }
+     .user_infos {
+       display: flex;
+     }
+     
+.pseudo {
+  width: 30%;
+} 
+
+.inscription {
+  width: 60%;
+}
+
+.voir_membre {
+  width: 10%;
+}
+
+
+  .see_user {
+    
+    background:rgb(252, 252, 252);
+    color: blue;
+    font-weight: bold;
+
+      &:hover {
+        transform: scale(1.1);
+        color: red
       }
+  }
 }
-
- /* border: 2px solid black;*/
-}
-
 
 input {
   margin-bottom: 30px;
 }
 
-.bio {
-  width:50%;
-  
-  overflow: hidden;
-  text-overflow: ellipsis;
-    
-  
-      
-  
-}
+
 
 span {
  position: relative;

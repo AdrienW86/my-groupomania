@@ -2,26 +2,7 @@
     <main>
         <Header/>
 
-        <section class="router">
-            <div class="router_link"> 
-                <router-link to="/messages"> 
-                    <span> Messages 
-                    </span> 
-                </router-link> 
-            </div>
-            <div class="router_link"> 
-                <router-link to="/users"> 
-                    <span> Membres 
-                    </span> 
-                </router-link> 
-            </div>
-            <div class="router_link">
-                <router-link to="/profil"> 
-                    <span> Mon Profil 
-                    </span> 
-                </router-link> 
-            </div>
-        </section>
+        <Menu/>
 
         <h1> Votre profil </h1> 
 
@@ -48,6 +29,27 @@
                 </a>
             </div>
         </section>
+       
+        <h2> Dernieres membres inscrits </h2>
+
+        <section>             
+            <div class="user-infos" >    
+        <li v-for="user in users" :key="user.id">
+          <div class="pseudo">
+            <span class="infos">{{user.username}} </span>
+          </div> 
+          <div class="bio">
+            <span class="infos">{{user.bio}} </span>
+          </div>
+          <div class="inscription">
+            <span class="infos">  Incris depuis: {{user.createdAt}} </span>
+          </div>
+          
+        </li>
+      </div>
+
+
+        </section>
 
         <Footer/>
 
@@ -58,6 +60,7 @@
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Menu from "../components/Menu"
 import axios from "axios";
 
 export default {
@@ -66,18 +69,22 @@ export default {
 
     components: {
         Header,
+        Menu,
         Footer              
 },
 
 data() {
 
     return {  
-          
+    
+    users: [],
     userSession: localStorage.getItem('admin'),
     username: localStorage.getItem('username'),
     userbio : sessionStorage.getItem('bio'),
     createdAt : localStorage.getItem('create'),
     userId : sessionStorage.getItem('user'),   
+          
+   
     }
 },
 
@@ -108,7 +115,24 @@ deleted() {
             });
     }
 },
+mounted() {
+    
 
+    axios
+    .get("http://localhost:8080/api/auth/all")
+
+    .then((response) => {
+     this.users = response.data
+        for  (let i = 0; i < this.users.length; i++) {
+       this.users[i].createdAt = this.users[i].createdAt.replace("T", " à ")
+       this.users[i].createdAt = this.users[i].createdAt.replace(".000Z", "")
+     console.log(this.users[i].username)
+    }      
+    }).catch((err) => {
+      console.log(err)
+    })
+
+},
 
   
 };
@@ -140,39 +164,6 @@ h2 {
 
 .bio {
     width: 65%;
-}
-
-.router {
-  display: flex;
-  justify-content: space-around;
-  text-decoration: none;
-  margin-bottom: 50px;
-  margin-top: 50px;
-
-  .router_link {
-    font-weight: bold;
-    border: 2px solid rgb(255, 255, 255);
-    border-radius: 50%;
-    height: 80px;
-    width: 80px;
-    box-shadow: 1px 5px 16px 10px rgba(187, 183, 183, 0.4);
-   -moz-box-shadow: 1px 5px 16px 10px rgba(187, 183, 183, 0.4);
-    -webkit-box-shadow: 1px 5px 16px 10px rgba(187, 183, 183, 0.4);
-    background-image: radial-gradient(farthest-corner at 60px 60px,
-      #f35 0%, rgb(202, 200, 228) 100%);;
-
-    &:hover {
-       transform: scale(1.1);
-    }
-
-    span {
-      display: inline-block;
-      vertical-align: center;
-      position: relative;
-      top: 30px;
-      color:rgb(11, 11, 124);
-    }    
-  }
 }
 
 </style>
