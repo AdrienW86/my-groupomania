@@ -19,6 +19,10 @@
                         </div>
                     </section>
                     <section class="about_message">
+                        <div class="title"> 
+                          {{ message.title }}
+                        </div>
+
                         <div class="message_content">
                             <span class="infos">{{ message.content }} </span>
                         </div>

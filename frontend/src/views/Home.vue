@@ -29,6 +29,10 @@ export default {
   components: {
     Header,
     Footer,       
+  },
+  mounted() {
+  if (localStorage.getItem('user'))
+    window.location.href = "/#/profil"
   }
 }
 </script>

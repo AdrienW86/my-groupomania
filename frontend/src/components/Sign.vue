@@ -42,6 +42,7 @@ export default {
         email: "",
         username: "",
         password: "",
+        bio:"",
       }
     }
   },
@@ -53,6 +54,7 @@ export default {
       email : this.userInfos.email,
       username: this.userInfos.username,
       password : this.userInfos.password,
+      bio : this.userInfos.bio
       };
 
       if( userData.email == null || userData.username == null || userData.password == null) {

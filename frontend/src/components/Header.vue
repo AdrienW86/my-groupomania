@@ -19,7 +19,7 @@
                     <div v-if="userId == 37">
                         <p class="administrateur"> Status : Administrateur  </p>
                     </div>
-                    <div v-else-if="userId >= 37">  
+                    <div v-else-if="userId > 37">  
                         <p class="membre"> Status : Membre  </p>
                     </div> 
                     <div v-else>

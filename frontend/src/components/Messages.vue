@@ -9,22 +9,21 @@
             <label class="new_post" for="input_text">Envoyer un nouveau message:
             </label>
             <br />
-            <h2>Titre </h2>
+            <h2>Titre</h2>
             <input v-model="message.title" class="post_title" placeholder="Titre du message" type="text"/>
               <h2> Message </h2>
               <input v-model="message.content" class="post_content" placeholder="Message" type="text">
           </section>
           <section class="post_image">            
             <h2> Votre image (facultatif) </h2>
-              <input  type="file" class="post_image" id="inputFile"
+              <input  type="file" class="post_image" id="file-selector"
                 aria-describedby="inputImage" @change="changeImage()"/>           
           </section>
-
         <div> 
           <img v-if="message.imageUrl" :src="message.imageUrl"/>
         </div>
             <button type="submit" 
-              class="btn" v-on:click="createMessage()" >Envoyer 
+              class="btn" v-on:click="createMessage()">Envoyer 
             </button>
         </form>
       </div>
@@ -49,8 +48,7 @@ export default {
     Header,
     Menu,
     AllMessages,
-    Footer,
-      
+    Footer,      
   },
 
   data() {
@@ -59,7 +57,7 @@ export default {
         title: "",
         content:"",
         attachment:"",
-        
+        UserId: "",        
       },
   }
 },
@@ -72,8 +70,8 @@ methods: {
     title: this.message.title,
     content: this.message.content,
     attachment: this.message.attachment,
+    UserId: this.message.UserId  
   };
-
       if (this.message.content == null || this.message.title == null) {
           window.alert('saisies invalides')
       }else{
@@ -86,8 +84,12 @@ methods: {
       },
     }
   ).then((response) => {
-    if (response) {
-     console.log(this.response)
+    let currentUser = localStorage.getItem('username') // Pseudo capturé 
+    let userMessage = response.data.UserId 
+    if (userMessage) {
+      userMessage = currentUser
+      console.log(userMessage)
+     return userMessage 
     }
   }).catch((error) => 
     console.log(error));
@@ -96,102 +98,8 @@ methods: {
 
 },
 
-
-
-
-
+  
 },
-
-
-
-
-
-
-
-
-/*
-onFileSelected(event) {
-    this.selectedFile = event.target.files[0]
-  },
-  
-
-  sendNewContent() { 
-    let regex = /^[^=*<>{}]+$/;
-    this.msgError ="";
-    let error;
-    
-
-    if(this.title === "" || this.title == null) {
-      error = "Titre requis";
-    }else if (this.title.length <3) {
-      error = "Un minimum de 3 caractères est requis";
-    }else if (!regex.test(this.title)) {
-      error = "Les caractères spéciaux ne sont pas autorisés";
-    }
-
-    if (this.content === "" || this.content == null) {
-      error = "Aucun contenu"
-    }else if (this.content.length <3) {
-      error = "Un minimum de 3 caractères est requis";
-    }else if (!regex.test(this.content)) {
-      error = "Les caractères spéciaux ne sont pas autorisés";
-    }
-
-
-    if (error) {
-      this.msgError = error;
-    }else {
-      const postData = new FormData();
-      if (this.selectedFile !== undefined) {
-        postData.append("image", this.selectedFile);
-      }
-
-
-      postData.append("title", this.title);
-      postData.append("content", this.content);
-      postData.append("UserId", localStorage.getItem("user"));
-
-      axios({
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer "+ localStorage.getItem("key")
-        },
-        method: "post",
-        url: "http://localhost:8080/api/auth/messages/new",
-        data: postData
-      }).then(response => {
-        this.postLoading();
-        if (response.status === 201) {
-          return response;
-        }else{
-          throw (error = response);
-        }
-      }).catch(error => {
-        this.msgError = error.response.data.error;
-      });
-    }
-  },
-
- 
- */   
-  
-
-    
-
-    
-
- 
-   
-  
-    
-  
-mounted() { 
-  
-
-
-
-
-}
 }
 </script>
 
