@@ -178,6 +178,27 @@ exports.getUserProfil = (req, res, next) => {
     });
 }
 
+
+exports.getOneUser = (req, res, next) => {
+    let headerAuth = req.headers['authorization'];
+    let userid = jwtUtils.getUserId(headerAuth);
+
+    if (userid < 0)
+    return res.status(400).json({ 'erreur': "token erroné"});
+
+    models.User.findOne({
+        attributes
+    })
+}
+
+
+
+
+
+
+
+
+
 exports.getAllUsers = (req, res, next) => {
 
     models.User.findAll()

@@ -1,28 +1,30 @@
 <template>
     <header>
-         <img alt="Vue logo" src="../assets/Groupomania_logo_white.png">
+        <img alt="Vue logo" src="../assets/Groupomania_logo_white.png">
             <nav class="navbar">
-            
-
-                 <div v-if="isLogged ==  0" class="connexion"> <router-link to="/login">Connexion</router-link> </div>
-                   <div v-if="isLogged == 1" class="deconnexion"> <button @click="disconnect()"> Déconnexion </button></div>
-
-                    <div else class="inscription"> <router-link to="/sign">Inscription</router-link> </div>
+                <div v-if="isLogged ==  0" class="connexion"> 
+                    <router-link to="/login">Connexion
+                    </router-link> 
+                </div>
+                <div v-if="isLogged == 1" class="deconnexion"> 
+                    <button @click="disconnect()"> Déconnexion 
+                    </button>
+                </div>
+                <div v-if="isLogged ==0" class="inscription"> 
+                    <router-link to="/sign">Inscription
+                    </router-link> 
+                </div>
             </nav>  
-
-                        <h2> {{ username }} </h2>
-
-                        <div v-if="userId == 37">
-          <p> Status : Administrateur  </p>
-          
-        </div>
-        <div v-else-if="userId >= 37">  
-          <p> Status : Membre  </p>
-        </div> 
-        
-        <div v-else> <p> Déconnecté</p>
-          
-        </div>                         
+                <h2> {{ username }} </h2>
+                    <div v-if="userId == 37">
+                        <p class="administrateur"> Status : Administrateur  </p>
+                    </div>
+                    <div v-else-if="userId >= 37">  
+                        <p class="membre"> Status : Membre  </p>
+                    </div> 
+                    <div v-else>
+                        <p> Déconnecté</p>
+                    </div>                         
                     
     </header>
 </template>
@@ -61,6 +63,14 @@ mounted() {
 },   
 methods: {
 
+    userLogged() {
+      if(localStorage.getItem("user")) {
+        this.isUserLogged = true;
+        this.isAdmin = localStorage.getItem("isAdmin")
+      
+      }
+    },
+
     disconnect() {
         sessionStorage.clear()
         localStorage.clear()
@@ -74,7 +84,10 @@ methods: {
 <style scoped lang="scss">
 
 h2 {
-    color: white;
+    color: rgb(136, 19, 19);
+    font-weight: bolder;
+    text-decoration-line: underline;
+   
 }
 
 header { 
@@ -130,7 +143,9 @@ p {
     font-weight: bold;
     font-size: 1.2em;
 } 
-
+.membre {
+    color: chartreuse;
+}
 button {
     border-radius: 40px;
     font-weight: bold;

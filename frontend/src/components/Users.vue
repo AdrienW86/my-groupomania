@@ -72,8 +72,12 @@ export default {
         });
     },
 
-    getOneUser() {},
-  },
+  getOneUser() {
+    axios
+      .get()
+
+  }
+},
 
   mounted() {
     axios
@@ -83,10 +87,7 @@ export default {
         for (let i = 0; i < this.users.length; i++) {
           console.log(this.users[i].createdAt);
           this.users[i].createdAt = this.users[i].createdAt.replace("T", " à ");
-          this.users[i].createdAt = this.users[i].createdAt.replace(
-            ".000Z",
-            ""
-          );
+          this.users[i].createdAt = this.users[i].createdAt.replace(".000Z","");
         }
       })
       .catch((err) => {
@@ -126,7 +127,7 @@ li {
     text-overflow: ellipsis;
   }
   .present {
-    width: 85%;
+    width: 84%;
   }
 
   .pseudo {
@@ -145,9 +146,8 @@ li {
   }
 
   .voir_membre {
-    width: 15%;
+    width: 14%;
    
-
     .see_user {
       background: rgb(252, 252, 252);
       color: blue;
