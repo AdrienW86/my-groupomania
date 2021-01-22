@@ -10,17 +10,21 @@
             </label>
             <br />
             <h2>Titre </h2>
-            <input v-model="messages.title" class="post_title" placeholder="Titre du message" type="text"/>
+            <input v-model="message.title" class="post_title" placeholder="Titre du message" type="text"/>
               <h2> Message </h2>
-              <input v-model="messages.content" class="post_content" placeholder="Message" type="text">
+              <input v-model="message.content" class="post_content" placeholder="Message" type="text">
           </section>
           <section class="post_image">            
             <h2> Votre image (facultatif) </h2>
-              <input name="image" type="file" class="post_image" id="inputFile"
-                aria-describedby="inputImage" @change="onFileSelected()"/>           
+              <input  type="file" class="post_image" id="inputFile"
+                aria-describedby="inputImage" @change="changeImage()"/>           
           </section>
+
+        <div> 
+          <img v-if="message.imageUrl" :src="message.imageUrl"/>
+        </div>
             <button type="submit" 
-              class="btn" v-on:click="sendNewContent()" >Envoyer 
+              class="btn" v-on:click="createMessage()" >Envoyer 
             </button>
         </form>
       </div>
@@ -39,6 +43,7 @@ import AllMessages from "../components/AllMessages";
 
 
 export default {
+  name: "Messages",
 
   components: {
     Header,
@@ -48,32 +53,73 @@ export default {
       
   },
 
-data() {
-  return {
-  messages :[] 
-  ,
-
-  isUserLogged: "",
-  msgError: "",  
-  isAdmin: "",   
-  }   
+  data() {
+    return {
+      message: {
+        title: "",
+        content:"",
+        attachment:"",
+        
+      },
+  }
 },
 
-  methods: {
+methods: {
 
-    
-    
-  },
-onFileSelected(){}
-   /* onFileSelected(event) {
+ createMessage() {
+
+  const MessageData = {
+    title: this.message.title,
+    content: this.message.content,
+    attachment: this.message.attachment,
+  };
+
+      if (this.message.content == null || this.message.title == null) {
+          window.alert('saisies invalides')
+      }else{
+
+        axios
+          .post("http://localhost:8080/api/auth/messages/new", MessageData,
+      { 
+            headers :{
+              Authorization: "Bearer "+ localStorage.getItem("key"),
+      },
+    }
+  ).then((response) => {
+    if (response) {
+     console.log(this.response)
+    }
+  }).catch((error) => 
+    console.log(error));
+   
+  }
+
+},
+
+
+
+
+
+},
+
+
+
+
+
+
+
+
+/*
+onFileSelected(event) {
     this.selectedFile = event.target.files[0]
   },
   
-  sendNewContent(e) { 
+
+  sendNewContent() { 
     let regex = /^[^=*<>{}]+$/;
     this.msgError ="";
     let error;
-    e.preventDefault();
+    
 
     if(this.title === "" || this.title == null) {
       error = "Titre requis";
@@ -126,40 +172,26 @@ onFileSelected(){}
     }
   },
 
-  postLoading() {
-    const options = {
-      headers : {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("key")
-      }
-    };
-    axios
-      .get("http://localhost:8080/api/auth/messages/", options)
-      .then(response => {
-        this.content = response.data;
-      }).catch(error => console.log(error));
+ 
+ */   
+  
+
+    
+
+    
+
+ 
+   
   
     
-  },
+  
 mounted() { 
-  this.postLoading();
-  this.userLogged(); */
-,
-mounted () {
-  axios
-    .get("http://localhost:8080/api/auth/messages")
-    .then((response) => {
-        this.messages = response.data;
-        for (let i = 0; i < this.messages.length; i++) {
-          console.log(this.messages[i].createdAt);
-          this.messages[i].createdAt = this.messages[i].createdAt.replace("T", " à ");
-          this.messages[i].createdAt = this.messages[i].createdAt.replace(".000Z","");
-        } 
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    },
+  
+
+
+
+
+}
 }
 </script>
 

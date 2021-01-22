@@ -19,6 +19,11 @@ exports.createMessage = (req, res, next) => {
 
     let title = req.body.title;
     let content = req.body.content;
+    let attachment = req.body.attachment;
+    if (req.body.attachment) {
+        req.body.attachment = `${req.protocol}://${req.get("host")}/images/${req.body.attachment}`
+    }
+    
 
     if (title == null || content == null) {
         return res.status(400).json({ 'erreur': "paramètres manquants" });
@@ -36,7 +41,7 @@ exports.createMessage = (req, res, next) => {
             models.Message.create({
                 title: title,
                 content: content,
-                attachment: 0,
+                attachment: attachment,
                 likes: 0,
                 UserId: userFound.id
             })

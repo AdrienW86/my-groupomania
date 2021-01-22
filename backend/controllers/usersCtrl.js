@@ -19,6 +19,7 @@ exports.signup = (req, res, next) => {
     let password = req.body.password;
     let username = req.body.username;
     let bio = req.body.bio;
+    
 
     if (email == null || username == null || password == null) {
         return res.status(400).json({ 'erreur': "paramètres manquants "});
@@ -94,7 +95,7 @@ exports.admin = (req, res, next) => {
                     username: username,
                     password: bcryptedPassword,
                     bio: bio,
-                    isAdmin: +1 
+                    isAdmin: 1 
                 })
                 .then(newUser => {
                     return res.status(201).json({

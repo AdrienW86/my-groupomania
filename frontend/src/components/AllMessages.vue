@@ -62,15 +62,26 @@ methods: {
     },
 },
 mounted () {
+     
+  axios
+    .get("http://localhost:8080/api/auth/all")
+    .then((response) => {
+      this.users = response.data;
+        for (let i = 0; i < this.users.length; i++) {         
+          this.users[i].createdAt = this.users[i].createdAt.replace("T", " à ");
+          this.users[i].createdAt = this.users[i].createdAt.replace(".000Z","");          
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   axios
     .get("http://localhost:8080/api/auth/messages")
     .then((response) => {
-        this.messages = response.data;
-        for (let i = 0; i < this.messages.length; i++) {
-          console.log(this.messages[i].createdAt);
+      this.messages = response.data;
+        for (let i = 0; i < this.messages.length; i++) {         
           this.messages[i].createdAt = this.messages[i].createdAt.replace("T", " à ");
-          this.messages[i].createdAt = this.messages[i].createdAt.replace(".000Z","");
-          console.log(response.data)
+          this.messages[i].createdAt = this.messages[i].createdAt.replace(".000Z","");                                 
         } 
       })
       .catch((err) => {
