@@ -16,14 +16,11 @@
           </section>
           <section class="post_image">            
             <h2> Votre image (facultatif) </h2>
-              <input  type="file" class="post_image" id="file-selector"
+              <input type="file" class="post_image" id="file-selector"
                 aria-describedby="inputImage" @change="changeImage()"/>           
-          </section>
-        <div> 
-          <img v-if="message.imageUrl" :src="message.imageUrl"/>
-        </div>
+          </section>      
             <button type="submit" 
-              class="btn" v-on:click="createMessage()">Envoyer 
+              class="btn" @click="createMessage()">Envoyer 
             </button>
         </form>
       </div>
@@ -64,43 +61,55 @@ export default {
 
 methods: {
 
+  changeImage(e) {
+     
+     var files = e.target.files || e.dataTransfer.files;
+     if (!files.length)
+     return;
+     this.changeImage(files[0])  
+  },  
+
  createMessage() {
 
   const MessageData = {
     title: this.message.title,
     content: this.message.content,
-    attachment: this.message.attachment,
-    UserId: this.message.UserId  
-  };
+    attachment: this.message.attachment,   
+  }
       if (this.message.content == null || this.message.title == null) {
           window.alert('saisies invalides')
       }else{
 
         axios
           .post("http://localhost:8080/api/auth/messages/new", MessageData,
-      { 
-            headers :{
-              Authorization: "Bearer "+ localStorage.getItem("key"),
-      },
-    }
-  ).then((response) => {
-    let currentUser = localStorage.getItem('username') // Pseudo capturé 
+            { 
+              headers :{
+                Authorization: "Bearer " + localStorage.getItem("key"),
+              },
+            }).then((response) => {
+              
+              let image = response.data                             
+              console.log(image)  
+                 
+            }).catch((error) => {
+              console.log(error)
+            })               
+      }  
+}
+
+},
+
+}
+ /*let currentUser = localStorage.getItem('username') // Pseudo capturé 
     let userMessage = response.data.UserId 
     if (userMessage) {
       userMessage = currentUser
       console.log(userMessage)
      return userMessage 
-    }
-  }).catch((error) => 
-    console.log(error));
-   
-  }
+    
 
-},
+    }*/
 
-  
-},
-}
 </script>
 
 <style scoped lang="scss">

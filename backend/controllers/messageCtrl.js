@@ -19,20 +19,16 @@ exports.createMessage = (req, res, next) => {
 
     let title = req.body.title;
     let content = req.body.content;
-    let attachment = req.body.attachment;
-    if (req.body.attachment) {
-        req.body.attachment = `${req.protocol}://${req.get("host")}/images/${req.body.attachment}`
+    let image = "";
+    if (req.file) {
+        image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
     }
-    
-
     if (title == null || content == null) {
         return res.status(400).json({ 'erreur': "paramètres manquants" });
     }
-
     if (title.length <= TITLE_LIMIT || content.length <= CONTENT_LIMIT) {
         return res.status(400).json({ 'erreur': "paramètres invalides" });
     }
-
     models.User.findOne({
         where: { id: userId }
     })
@@ -41,7 +37,7 @@ exports.createMessage = (req, res, next) => {
             models.Message.create({
                 title: title,
                 content: content,
-                attachment: attachment,
+                attachment: image,
                 likes: 0,
                 UserId: userFound.id
             })
@@ -51,13 +47,10 @@ exports.createMessage = (req, res, next) => {
                 }else{
                     return res.status(500).json({ 'erreur': "impossible de publier le message" });
                 }
-
             });
-
         }else{
             res.status(404).json({ 'erreur': "utilisateur introuvable" });
         }
-
     })
     .catch(err => {
         return res.status(500).json({ 'erreur': "impossible de trouver l'utilisateur" });
@@ -71,15 +64,14 @@ exports.listMessage = (req, res, next) => {
     let order = req.query.order;
 
     models.Message.findAll({
-        order: [(order != null) ? order.split(':') : ['title', 'ASC']],
+        order: [(order != null) ? order.split(':') : ['createdAt', 'DESC']],
         attributes: (fields != '*' && fields != null) ? fields.split(',') : null,
-        limit: (!isNaN(limit)) ? limit : null,
-        offset: (!isNaN(offset)) ? offset : null,
+        limit: (!isNaN(limit)) ? limit : 20,
+        offset: (!isNaN(offset)) ? offset : 20,
         include: [{
             model: models.User,
             attributes: ['email']
         }]
-
         }).then(messages => {
             if (messages) {
                 res.status(200).json(messages);

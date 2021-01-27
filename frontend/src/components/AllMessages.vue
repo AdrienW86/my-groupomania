@@ -8,7 +8,8 @@
                     <section class="content">
                         <div class="present">
                             <div class="user">
-                                <span class="infos">{{ message.UserId  }} </span>
+                                <span class="infos"> {{ message.UserId }} </span>
+                                <span class="photo"> {{ message.attachment}} </span>
                             </div>
                              <div class="date">
                                 <span class="infos"> Envoyé le: {{ message.createdAt }} </span>
